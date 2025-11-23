@@ -1,0 +1,441 @@
+{
+  "name": "Create a chatbot in telegram",
+  "nodes": [
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=based on the below text please response politely \n\ntext: {{ $json.message.text }}\n\nthe response should be in 50 tokens \n\n\n",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3,
+      "position": [
+        -816,
+        -80
+      ],
+      "id": "848ac484-52fd-418e-9731-7106f789b502",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        -880,
+        80
+      ],
+      "id": "de4157de-ff42-437d-b4d8-5cfd1439d8ec",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "5ZisEkBWVxj5oBqQ",
+          "name": "Unnamed credential"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $json.message.chat.id }}",
+        "contextWindowLength": 20
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        -736,
+        80
+      ],
+      "id": "c9279ae9-bfdb-40ed-ad08-5d1f6912b519",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=based on the below text please response politely\n\ntext: {{ $json.message.text }}\n\nthe response should be in 100 tokens \n\n\n",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3,
+      "position": [
+        128,
+        -112
+      ],
+      "id": "7469d9a4-f1d4-403a-83c4-a41797af6558",
+      "name": "AI Agent1"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        160,
+        80
+      ],
+      "id": "e8dc99f6-afa6-49d5-895b-bc8bf0464a51",
+      "name": "Google Gemini Chat Model1",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "5ZisEkBWVxj5oBqQ",
+          "name": "Unnamed credential"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $json.message.chat.id }}",
+        "contextWindowLength": 50
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        320,
+        80
+      ],
+      "id": "c780b6e1-4b30-4fa4-acc4-db0f3fb5d65f",
+      "name": "Simple Memory1"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "b2522f9b-f322-47a7-8523-9b3bec128661",
+              "leftValue": "={{ $json.message.chat.id }}",
+              "rightValue": "6162773383",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -64,
+        -96
+      ],
+      "id": "f16f1b16-6b93-4f1f-9bb6-d936a66e9ceb",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "content": "## To buy the chatbot in Telegram to Get the Solutions.",
+        "height": 80,
+        "width": 368,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -32,
+        -224
+      ],
+      "typeVersion": 1,
+      "id": "f27ad18c-6768-44c7-b551-9dee8ae2719f",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "content": "##  Created the chatbot in Telegram. Giving Solutions based on the User Query.",
+        "height": 80,
+        "width": 496,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -976,
+        -208
+      ],
+      "typeVersion": 1,
+      "id": "06f2414c-305f-41c2-a3da-dbc7efd182a9",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "updates": [
+          "message"
+        ],
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegramTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -992,
+        -64
+      ],
+      "id": "a156212e-f035-44dd-8f33-45937f219a12",
+      "name": "User message from Telegram",
+      "webhookId": "d363fb92-aa25-4dca-9dfb-67d26da095d0",
+      "credentials": {
+        "telegramApi": {
+          "id": "n5BSF00haaa0Qpjd",
+          "name": "Telegram account 2"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "updates": [
+          "message"
+        ],
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegramTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -208,
+        -96
+      ],
+      "id": "e8a515e3-e02e-41c5-bdcd-eeb64e27a00e",
+      "name": "User Message From Telegram",
+      "webhookId": "d363fb92-aa25-4dca-9dfb-67d26da095d0",
+      "credentials": {
+        "telegramApi": {
+          "id": "n5BSF00haaa0Qpjd",
+          "name": "Telegram account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('User Message From Telegram').item.json.message.chat.id }}",
+        "text": "Go and buy my chatbot",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        -64,
+        128
+      ],
+      "id": "fbfa0e3a-125d-4830-87f2-5f9c510f3acb",
+      "name": "You have to Buy the chatbot ",
+      "webhookId": "fc9b5d91-ca2a-4ba1-a85b-43e2e5eb8d97",
+      "credentials": {
+        "telegramApi": {
+          "id": "n5BSF00haaa0Qpjd",
+          "name": "Telegram account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('User Message From Telegram').item.json.message.chat.id }}",
+        "text": "={{ $json.output }}",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        416,
+        -112
+      ],
+      "id": "25f4393c-c3fb-4e2b-a5c6-ecf655123421",
+      "name": "If buy the Chatbot you get the Solution",
+      "webhookId": "4565a9cb-f2ad-40e9-bbdf-71599c4f5762",
+      "credentials": {
+        "telegramApi": {
+          "id": "n5BSF00haaa0Qpjd",
+          "name": "Telegram account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "",
+        "height": 544,
+        "width": 768,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -1072,
+        -240
+      ],
+      "typeVersion": 1,
+      "id": "0a4f65a3-ca96-4c5d-9bbd-dfcee3104215",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "content": "",
+        "height": 544,
+        "width": 832,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -272,
+        -240
+      ],
+      "typeVersion": 1,
+      "id": "8869535e-8827-4f68-85c8-14a3cb80fb69",
+      "name": "Sticky Note3"
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('User message from Telegram').item.json.message.chat.id }}",
+        "text": "={{ $json.output }}",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        -480,
+        -80
+      ],
+      "id": "611bc27b-a89a-40b8-ba3c-7379ee87f5f6",
+      "name": "Based on the user Query the Chatbot give Solution",
+      "webhookId": "4565a9cb-f2ad-40e9-bbdf-71599c4f5762",
+      "credentials": {
+        "telegramApi": {
+          "id": "n5BSF00haaa0Qpjd",
+          "name": "Telegram account 2"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Based on the user Query the Chatbot give Solution",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent1": {
+      "main": [
+        [
+          {
+            "node": "If buy the Chatbot you get the Solution",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory1": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent1",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "AI Agent1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "You have to Buy the chatbot ",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "User message from Telegram": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "User Message From Telegram": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "8cb5b88a-d897-479d-97a7-c2f18ad98950",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "8f348adc3def0366e9abda613df70e749fcde2a1c0273d9ac1f3ad2ccb77292e"
+  },
+  "id": "MrVr3VlACetyDH64",
+  "tags": []
+}
